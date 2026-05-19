@@ -81,6 +81,7 @@ For timed transitions, some of the supported distributions are:
 | Weibull ("weibull_min")| `a`, `b`, `c`    |
 
 More distributions can be easily implemented in `RNGFactory.py`. See [Scipy's documentation](https://docs.scipy.org/doc/scipy/reference/stats.html) for details regarding the distributions and their parameters.
+
 **Note on distribution parameters**
 
 PySPN uses `scipy.stats` for random delay generation. Therefore, the
