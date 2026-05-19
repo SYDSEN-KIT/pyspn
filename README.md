@@ -81,6 +81,30 @@ For timed transitions, some of the supported distributions are:
 | Weibull ("weibull_min")| `a`, `b`, `c`    |
 
 More distributions can be easily implemented in `RNGFactory.py`. See [Scipy's documentation](https://docs.scipy.org/doc/scipy/reference/stats.html) for details regarding the distributions and their parameters.
+**Note on distribution parameters**
+
+PySPN uses `scipy.stats` for random delay generation. Therefore, the
+parameters `a`, `b`, `c`, ... follow the SciPy parameterization of the
+corresponding distribution and are passed positionally to SciPy’s `rvs(...)`
+function. This may differ from common textbook parameterizations of the same
+named distributions.
+
+For example, a triangular distribution is often specified by
+`(lower, mode, upper)`. In SciPy, however, `scipy.stats.triang` uses
+`c` as a shape parameter in the standardized interval `[0, 1]`, together with
+`loc` and `scale`. The support is `[loc, loc + scale]`, and the mode is
+`loc + c * scale`.
+
+Thus, to model a triangular distribution with lower bound `L`, mode `M`,
+and upper bound `U` in PySPN, use:
+```python
+t.set_distribution(
+     distribution="triang",
+     a=(M - L) / (U - L),  # SciPy shape parameter c
+     b=L,                 # loc
+     c=U - L              # scale
+ )
+```
 
 ### Guard Functions for Transitions
 
